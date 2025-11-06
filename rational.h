@@ -4,12 +4,12 @@
 
 class Rational {
 public:
-    //              Constructors
+    // Constructors
 
     // Num and Denom
-    Rational(int numerator, int denominator) {
+    Rational(int64_t numerator, int64_t denominator) {
         if (denominator == 0){
-            std::cerr << "Знаменатель не может быть равен нулю";
+            std::cerr << "Denominator is zero" << std::endl;
         } else {
             numerator_ = numerator;
             denominator_ = denominator;
@@ -18,7 +18,7 @@ public:
     }
 
     // Only numerator
-    Rational(int numerator) {
+    Rational(int64_t numerator) {
         numerator_ = numerator;
     }
 
@@ -31,8 +31,8 @@ public:
         denominator_ = r.denominator_;
         Reduction();
     }
-    //
-    //              Methods
+
+    // Methods
 
     // Inversion
     Rational Inv() const {
@@ -57,10 +57,9 @@ public:
         denominator_ /= divisor;
     }
 
-    //
-    //              Operator Overload
+    // Operator Overload
 
-    //                  Arithmetic
+    // Arithmetic
 
     Rational operator+(const Rational& lhs) const {
         return {numerator_ * lhs.denominator_ + lhs.numerator_ * denominator_,
@@ -81,8 +80,8 @@ public:
         return {numerator_ * lhs.denominator_,
                 denominator_ * lhs.numerator_};
     }
-    //
-    //                  Assignment
+
+    // Assignment
 
     Rational& operator=(const Rational& lhs) {
         numerator_ = lhs.numerator_;
@@ -104,18 +103,18 @@ public:
     Rational operator/=(const Rational& lhs) {
         return *this = *this / lhs;
     }
-    //
-    //                  Unary
+
+    // Unary
 
     Rational operator+() const {
-        return {numerator_, denominator_};
+        return *this;
     }
 
     Rational operator-() const {
         return {-numerator_, denominator_};
     }
-    //
-    //                  Comparison
+
+    // Comparison
 
     auto operator==(const Rational& lhs) const {
         return (numerator_ * lhs.denominator_) == (lhs.numerator_ * denominator_);
@@ -124,18 +123,17 @@ public:
     auto operator<=>(const Rational& lhs) const {
         return (numerator_ * lhs.denominator_) <=> (lhs.numerator_ * denominator_);
     }
-    //
 
     friend std::ostream& operator<<(std::ostream& os, const Rational& r);
     friend std::istream& operator>>(std::istream& is, Rational& r);
 
 private:
 
-    int numerator_ = 0;
-    int denominator_ = 1;
+    int64_t numerator_ = 0;
+    int64_t denominator_ = 1;
 };
 
-//                    IOS Overload
+// IOS Overload
 
 inline std::ostream& operator<<(std::ostream& os, const Rational& r) {
     if (r.denominator_ == 1) {

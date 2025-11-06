@@ -89,65 +89,80 @@ void MainWindow::SetControllerCallback(std::function<void (ControllerType)> cb) 
 
 //Buttons processing
 void MainWindow::OnComboBoxChanged(int index) {
-    ControllerType controller_type = static_cast<ControllerType>(index);
 
-    cb_set_controller_(controller_type);
+    if (cb_set_controller_) {
+        ControllerType controller_type = static_cast<ControllerType>(index);
+
+        cb_set_controller_(controller_type);
+    }
 }
 
 void MainWindow::OnDigitClicked() {
-    QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
-    int digit = sender_button->text().toInt();
-    cb_set_digit_(digit);
+
+    if (cb_set_digit_) {
+        QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
+        int digit = sender_button->text().toInt();
+
+        cb_set_digit_(digit);
+    }
 }
 
 void MainWindow::OnOperationClicked() {
-    QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
-    QString operation = sender_button->text();
 
-    if (operation  == "+") {
-        cb_set_operation_(Operation::ADDITION);
+    if (cb_set_operation_) {
 
-    } else if (operation == "−") {
-        cb_set_operation_(Operation::SUBTRACTION);
+        QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
+        QString operation = sender_button->text();
 
-    } else if (operation == "×") {
-        cb_set_operation_(Operation::MULTIPLICATION);
+        if (operation  == "+") {
+            cb_set_operation_(Operation::ADDITION);
 
-    } else if (operation == "÷") {
-        cb_set_operation_(Operation::DIVISION);
+        } else if (operation == "−") {
+            cb_set_operation_(Operation::SUBTRACTION);
 
-    } else {
-        cb_set_operation_(Operation::POWER);
+        } else if (operation == "×") {
+            cb_set_operation_(Operation::MULTIPLICATION);
+
+        } else if (operation == "÷") {
+            cb_set_operation_(Operation::DIVISION);
+
+        } else {
+            cb_set_operation_(Operation::POWER);
+        }
     }
 }
 
 void MainWindow::OnControlClicked() {
-    QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
-    QString control = sender_button->text();
 
-    if (control  == "=") {
-        cb_set_control_(ControlKey::EQUALS);
+    if (cb_set_control_) {
 
-    } else if (control == "C") {
-        cb_set_control_(ControlKey::CLEAR);
+        QPushButton* sender_button = qobject_cast<QPushButton*>(sender());
+        QString control = sender_button->text();
 
-    } else if (control == "MS") {
-        cb_set_control_(ControlKey::MEM_SAVE);
+        if (control  == "=") {
+            cb_set_control_(ControlKey::EQUALS);
 
-    } else if (control == "MR") {
-        cb_set_control_(ControlKey::MEM_LOAD);
+        } else if (control == "C") {
+            cb_set_control_(ControlKey::CLEAR);
 
-    } else if (control == "MC"){
-        cb_set_control_(ControlKey::MEM_CLEAR);
+        } else if (control == "MS") {
+            cb_set_control_(ControlKey::MEM_SAVE);
 
-    } else if (control == "±"){
-        cb_set_control_(ControlKey::PLUS_MINUS);
+        } else if (control == "MR") {
+            cb_set_control_(ControlKey::MEM_LOAD);
 
-    } else if (control == "⌫"){
-        cb_set_control_(ControlKey::BACKSPACE);
+        } else if (control == "MC"){
+            cb_set_control_(ControlKey::MEM_CLEAR);
 
-    } else {
-        cb_set_control_(ControlKey::EXTRA_KEY);
+        } else if (control == "±"){
+            cb_set_control_(ControlKey::PLUS_MINUS);
+
+        } else if (control == "⌫"){
+            cb_set_control_(ControlKey::BACKSPACE);
+
+        } else {
+            cb_set_control_(ControlKey::EXTRA_KEY);
+        }
     }
 }
 
